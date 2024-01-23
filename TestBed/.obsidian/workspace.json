@@ -13,13 +13,22 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Welcome.md",
+                "file": "create a link.md",
                 "mode": "source",
                 "source": false
               }
             }
+          },
+          {
+            "id": "76a9ee207a382029",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {}
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Welcome.md",
+                "file": "create a link.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +111,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Welcome.md",
+                "file": "create a link.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +134,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Welcome.md"
+                "file": "create a link.md"
               }
             }
           }
@@ -147,8 +156,13 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "f34be3472e943921",
+  "active": "76a9ee207a382029",
   "lastOpenFiles": [
-    "Welcome.md"
+    "Welcome 1 1 1.md",
+    "create a link.md",
+    "Welcome 1 1 1 1.md",
+    "Welcome 1 1.md",
+    "Welcome.md",
+    "Welcome 1.md"
   ]
 }

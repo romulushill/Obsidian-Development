@@ -1,6 +1,3 @@
 [
-  "sample-plugin",
-  "obsidian-toast",
-  "yapp",
-  "hot-reload"
+  "yapp"
 ]

@@ -1,14 +1,14 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, ButtonComponent, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 
 // Remember to rename these classes and interfaces!
 
 interface YAPPSettings {
-	mySetting: string;
+	IgnoreGroups: boolean;
 }
 
 const DEFAULT_SETTINGS: YAPPSettings = {
-	mySetting: 'default'
-}
+	IgnoreGroups: true,
+};
 
 export default class YAPP extends Plugin {
 	settings: YAPPSettings;
@@ -49,27 +49,28 @@ export default class YAPP extends Plugin {
 		//});
 
 		// This adds a complex command that can check whether the current state of the app allows execution of the command
-		this.addCommand({
-			id: 'open-sample-modal-complex',
-			name: 'Open sample modal (complex)',
-			checkCallback: (checking: boolean) => {
-				// Conditions to check
-				const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (markdownView) {
-					// If checking is true, we're simply "checking" if the command can be run.
-					// If checking is false, then we want to actually perform the operation.
-					if (!checking) {
-						new DisplayBox(this.app, "Test Command", `Description of the command:${checking}`).open();
-					}
 
-					// This command will only show up in Command Palette when the check function returns true
-					return true;
-				}
-			}
-		});
+		//this.addCommand({
+		//	id: 'open-sample-modal-complex',
+		//	name: 'Open sample modal (complex)',
+		//	checkCallback: (checking: boolean) => {
+		//		// Conditions to check
+		//		const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView);
+		//		if (markdownView) {
+		//			// If checking is true, we're simply "checking" if the command can be run.
+		//			// If checking is false, then we want to actually perform the operation.
+		//			if (!checking) {
+		//				new DisplayBox(this.app, "Test Command", `Description of the command:${checking}`).open();
+		//			}
+//
+		//			// This command will only show up in Command Palette when the check function returns true
+		//			return true;
+		//		}
+		//	}
+		//});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new SettingsTab(this.app, this));
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
@@ -107,7 +108,14 @@ class DisplayBox extends Modal {
 	onOpen() {
 		const {contentEl} = this;
 		contentEl.createEl("h1", { text: this.Header });
+		contentEl.createEl("div", { text: this.Message });
 		//contentEl.setText(`${this.Message}`);
+
+		new ButtonComponent(contentEl)
+			.setButtonText("Close")
+			.onClick(() => {
+				this.close();
+			});
 	}
 
 	onClose() {
@@ -116,7 +124,7 @@ class DisplayBox extends Modal {
 	}
 }
 
-class SampleSettingTab extends PluginSettingTab {
+class SettingsTab extends PluginSettingTab {
 	plugin: YAPP;
 
 	constructor(app: App, plugin: YAPP) {
@@ -130,14 +138,14 @@ class SampleSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
-				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
+			.setName('Ignore Groups')
+			.setDesc('Allows YAPP to overwrite the default obsidian graph colouring and linkage')
+			.addToggle((toggle) => {
+				toggle.setValue(this.plugin.settings.IgnoreGroups)
+					.onChange(async (value) => {
+						this.plugin.settings.IgnoreGroups = value;
+						await this.plugin.saveSettings();
+					});
+			});
 	}
 }
