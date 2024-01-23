@@ -25,31 +25,29 @@ export default class YAPP extends Plugin {
 		ribbonIconEl.addClass('my-plugin-ribbon-class');
 
 		// This adds a status bar item to the bottom of the app. Does not work on mobile apps.
-		const statusBarItemEl = this.addStatusBarItem();
-		statusBarItemEl.setText('Status Bar Text');
-
-		this.addRibbonIcon('dice', 'Greet', () => {
-			new Notice('Hello, world!');
-		});
+		const StatusBarNotice = this.addStatusBarItem();
+		StatusBarNotice.setText("YAPP ACTIVE");
 
 		// This adds a simple command that can be triggered anywhere
 		this.addCommand({
-			id: 'close',
-			name: 'close',
+			id: "rescan",
+			name: "Re-Scan",
 			callback: () => {
-				console.log('Closed');
-				new SampleModal(this.app, "Closing", "Closing this window").open();
-			}
+				console.log("Re-scanning the active directory for file changes...");
+				new DisplayBox(this.app, "Re-Scanning", "Checking your active obsidian vault for file changes, appending any changes to the graph display.").open();
+			},
 		});
 		// This adds an editor command that can perform some operation on the current editor instance
-		this.addCommand({
-			id: 'sample-editor-command',
-			name: 'Sample editor command',
-			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
-				editor.replaceSelection('Sample Editor Command'); // inserts text object
-			}
-		});
+		
+		//this.addCommand({
+		//	id: 'sample-editor-command',
+		//	name: 'Sample editor command',
+		//	editorCallback: (editor: Editor, view: MarkdownView) => {
+		//		console.log(editor.getSelection());
+		//		editor.replaceSelection('Sample Editor Command'); // inserts text object
+		//	}
+		//});
+
 		// This adds a complex command that can check whether the current state of the app allows execution of the command
 		this.addCommand({
 			id: 'open-sample-modal-complex',
@@ -61,7 +59,7 @@ export default class YAPP extends Plugin {
 					// If checking is true, we're simply "checking" if the command can be run.
 					// If checking is false, then we want to actually perform the operation.
 					if (!checking) {
-						new SampleModal(this.app, "Test Command", "Description of the command").open();
+						new DisplayBox(this.app, "Test Command", `Description of the command:${checking}`).open();
 					}
 
 					// This command will only show up in Command Palette when the check function returns true
@@ -96,7 +94,7 @@ export default class YAPP extends Plugin {
 	}
 }
 
-class SampleModal extends Modal {
+class DisplayBox extends Modal {
 	Header : string;
 	Message : string;
 	constructor(app: App, Header: string, Message: string) {
@@ -108,7 +106,8 @@ class SampleModal extends Modal {
 
 	onOpen() {
 		const {contentEl} = this;
-		contentEl.setText(this.Header);
+		contentEl.createEl("h1", { text: this.Header });
+		//contentEl.setText(`${this.Message}`);
 	}
 
 	onClose() {
