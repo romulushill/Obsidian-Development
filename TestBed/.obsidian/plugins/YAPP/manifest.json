@@ -1,0 +1,11 @@
+{
+	"id": "yapp",
+	"name": "YAPP",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Yet Another Productivity Plugin",
+	"author": "Romulus Hill",
+	"authorUrl": "https://github.com/romulushill/",
+	"fundingUrl": "https://github.com/romulushill/yapp/",
+	"isDesktopOnly": false
+}
