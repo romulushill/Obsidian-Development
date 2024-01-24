@@ -6,3 +6,6 @@ available in the app when your plugin is enabled.
 If your plugin does not need CSS, delete this file.
 
 */
+.name_description {
+  font-style: italic;
+}
